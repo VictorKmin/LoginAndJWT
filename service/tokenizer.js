@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const secretWorld = require('../helper/constants').secret;
 
 module.exports = (userName, password)=> {
-    let toket = jwt.sign({name: userName,pass: password}, 'someSecretWorld', {algorithm: 'RSA' });
-    console.log(toket);
+    let token = jwt.sign({name: userName,pass: password}, secretWorld);
+    return token;
 };

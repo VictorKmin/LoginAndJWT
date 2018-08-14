@@ -1,11 +1,14 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const resolve = require('path').resolve;
+const DBName = require('../helper/constants').dbName;
+const DBUser = require('../helper/constants').dbUser;
+const DBPass = require('../helper/constants').dbPass;
 
 module.exports = (() => {
     let instance;
     function initConnection() {
-        let client = new Sequelize('jwtDB', 'root', 'root', {
+        let client = new Sequelize(DBName, DBUser, DBPass, {
             host: 'localhost',
             dialect: 'postgres',
             operatorsAliases: false,

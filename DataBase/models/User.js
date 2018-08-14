@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         password: {
             type: DataTypes.STRING
-        },
-        toket: {
-            type: DataTypes.STRING
         }
     }, {
         tableName: 'users',
