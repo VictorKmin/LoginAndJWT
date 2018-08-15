@@ -4,10 +4,9 @@ const path = require("path");
 const expBars = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
-const jwt = require('express-jwt');
-const helpers = require('./helper/constants');
 
 const userRouter = require('./router/userRouter');
+const authRouter = require('./router/authRouter');
 
 const postgres = new require('./DataBase').getInstance();
 postgres.setModels();
@@ -29,14 +28,14 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(jwt({secret: helpers.secret}));
 app.use('/', userRouter);
+app.use('/auth', authRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));
 });
 
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
