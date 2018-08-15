@@ -11,11 +11,11 @@ module.exports = async (req, res) => {
         const token = req.get('Authorization');
         let unixNow = Math.floor(Date.now() / 1000);
 
-        if (!token) return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
+        if (!token) return res.status(401).send({ message: 'Please make sure your request has token' });
         let user = null;
 
         jwt.verify(token, secretWorld, function (err, decoded) {
-            if (err) throw new Error('DON\'T HACK MY SITE');
+            if (err) throw new Error('You have bad token.');
             if (decoded.exp <= unixNow) throw new Error ('TOKEN EXPIRED');
             console.log(decoded);
             user = {
@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
         });
 
         console.log(user);
-        if (!user) throw new Error('User not found');
+        if (!user) throw new Error('DON\'T HACK MY SITE');
         const users = await UserModel.findAll();
         res.json(users)
     } catch (err) {
