@@ -4,6 +4,8 @@ const path = require("path");
 const expBars = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
+const jwt = require('express-jwt');
+const helpers = require('./helper/constants');
 
 const userRouter = require('./router/userRouter');
 
@@ -27,7 +29,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// app.use(jwt({secret: helpers.secret}));
 app.use('/', userRouter);
 
 app.use(function (req, res, next) {

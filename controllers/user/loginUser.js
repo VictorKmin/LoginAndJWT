@@ -1,37 +1,36 @@
 /**
  * Сторінка логінації
+ * Обробляємо помилки в трай кеч. рахується хорошою прктикою
+ * Всі константи оголошуємо зверху
  */
 const hasher = require('../../service/passwordHasher');
-const uuid = require('uuid');
+const tokenizer = require('../../service/tokenizer');
 
-module.exports = async (req, res)=> {
-    console.log(uuid());
-    console.log('login User Page');
-    let userName = req.body.name;
-    let hashedPassword = hasher(req.body.password);
-
-    const postgres = req.app.get('postgres');
-    const UserModel = postgres.getModel('User');
-    let logginedUser = await UserModel.findAll({
-        where: {
-            name: userName,
-            password: hashedPassword
-        }
-    });
-
-
-
-
-
-    // ERRORS
-    if (!logginedUser || logginedUser.length === 0) {
-        res.render('error', {
-            error: 'U A NOT REGISTERED'
+module.exports = async (req, res) => {
+    try {
+        console.log('login User Page');
+        const postgres = req.app.get('postgres');
+        const UserModel = postgres.getModel('User');
+        const userName = req.body.name;
+        const hashedPassword = hasher(req.body.password);
+        const user = await UserModel.findOne({
+            where: {
+                name: userName,
+                password: hashedPassword
+            }
         });
-    } else {
-        console.log('ЗАЛОГІНЕНО');
-        res.render('welcome', {
-            name: userName
+        if (!user) throw new Error('User was not found');
+        const tokens = tokenizer(user.id);
+
+        // console.log(tokens);
+        res.json({
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken
+        });
+    }catch(err){
+        res.json({
+            success: false,
+            message: err.message
         })
     }
 };
