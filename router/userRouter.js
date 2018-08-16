@@ -5,13 +5,14 @@ const rigisterUser = require('../controllers/user/registerUser');
 const logoutUser = require('../controllers/user/logoutUser');
 const homePage = require('../controllers/homePages/homePageController');
 const findAllController = require('../controllers/user/findAllUsers');
-const tokenVeryficator = require('../service/tokenVeryficator');
+const updateUserController = require('../controllers/user/updateUserController');
 
 router.get('/',homePage);
-router.post('/welcome', tokenVeryficator, loginUser);
-router.post('/register', tokenVeryficator, rigisterUser);
-router.get('/logout',logoutUser);
-router.post('/users',tokenVeryficator, findAllController);
+router.post('/welcome', loginUser);
+router.post('/register', rigisterUser);
+router.get('/logout', logoutUser);
+router.get('/users', findAllController);
+router.put('/update', updateUserController);
 
 
 module.exports = router;

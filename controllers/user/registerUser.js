@@ -10,26 +10,28 @@ module.exports = async (req, res) => {
         const UserModel = postgres.getModel('User');
         const userName = req.body.name;
         const hashedPassword = hasher(req.body.password);
+        if (!userName) throw new Error('Please enter username');
 
         const users = await UserModel.findOne({
             where: {
                 name: userName
             }
         });
-        if (users.length !== 0) throw new Error('THIS USER IS ALREADY CREATED');
+        console.log(users);
+
+        if (users) throw new Error('THIS USER IS ALREADY CREATED');
         let userToSave = {
             name: userName,
             password: hashedPassword
         };
 
-        if (!userToSave || userName === null || hashedPassword === null) throw new Error('SOME FIELD IS NULL');
         console.log('ЮЗЕРА СТВОРЕНО');
         await UserModel.create({
             name: userName,
             password: hashedPassword
         });
         res.json(userToSave)
-    }catch (err) {
+    } catch (err) {
         res.json({
             success: false,
             message: err.message
