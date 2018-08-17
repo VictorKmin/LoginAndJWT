@@ -89,8 +89,9 @@ module.exports = async (req, res) => {
 
 
         let usersAndCars = [];
-        let allUsers = new Set();
 
+        let userToPrint = new Object();
+        let allUsers = new Set();
         //Цикл якийдістає всі значення з масиву який прийшов з бази і вносить їх в інакший масиш
         // ШТООООО
         users.forEach(element => {
@@ -102,17 +103,33 @@ module.exports = async (req, res) => {
             usersAndCars.push(userWithCar);
         });
 
-        // console.log(usersAndCars);
-        // console.log(allUsers);
+        let final = [];
+        allUsers.forEach(uniqueName=> {
+            userToPrint.name = uniqueName;
+            console.log(uniqueName);
+            usersAndCars.forEach(userAndCar=>{
+                if (uniqueName === userAndCar.userName) {
+                    console.log(userAndCar)
+                    console.log('__________________________');
+                    userToPrint.cars = userAndCar.car
+                }
+            });
 
-        usersAndCars.forEach(obj => {
-            if (allUsers.has(obj.userName)) {
-                console.log(obj.userName);
-                console.log(obj.car);
-                console.log(allUsers);
-                console.log('__________________');
-            }
+            final.push(userToPrint)
         });
+
+        console.log('+++++++++++++++++++++++++++++++++++++++++')
+        console.log(final);
+
+
+        // usersAndCars.forEach(obj => {
+        //     if (allUsers.has(obj.userName)) {
+        //         console.log(obj.userName);
+        //         console.log(obj.car);
+        //         console.log(allUsers);
+        //         console.log('__________________');
+        //     }
+        // });
 
         res.json(usersAndCars)
     } catch (err) {
