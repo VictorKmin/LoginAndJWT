@@ -5,59 +5,6 @@
 //refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIiLCJpYXQiOjE1MzQzMzk1NTcsImV4cCI6MTAwMTUzNDMzOTU1Nn0.rsWrSlLz1RG_kh374ShTrWf7P0J0S-icEiChGfjAWY8"
 // wrongRefresh: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTM0MzI3MTgxLCJleHAiOjExNTM0MzI3MTgwfQ._kMaILb5tRg6B0m9px1yFfjzv7_GOEBDFyhMWVyPtIE
 
-
-// SELECT users."id", users."name", cars.model
-// FROM users
-// LEFT OUTER JOIN "enrollCarUser"
-// ON users."id" = "enrollCarUser"."userId"
-// LEFT OUTER JOIN cars
-// ON "enrollCarUser"."carId"= cars."id"
-
-
-// const ItemTag = sequelize.define('item_tag', {
-//     id : {
-//         type: DataTypes.INTEGER,
-//         primaryKey: true,
-//         autoIncrement: true
-//     },
-//     tag_id: {
-//         type: DataTypes.INTEGER,
-//         unique: 'item_tag_taggable'
-//     },
-//     taggable: {
-//         type: DataTypes.STRING,
-//         unique: 'item_tag_taggable'
-//     },
-//     taggable_id: {
-//         type: DataTypes.INTEGER,
-//         unique: 'item_tag_taggable',
-//         references: null
-//     }
-// });
-// const Tag = sequelize.define('tag', {
-//     name: DataTypes.STRING
-// });
-
-// Post.belongsToMany(Tag, {
-//     through: {
-//         model: ItemTag,
-//         unique: false,
-//         scope: {
-//             taggable: 'post'
-//         }
-//     },
-//     foreignKey: 'taggable_id',
-//     constraints: false
-// });
-// Tag.belongsToMany(Post, {
-//     through: {
-//         model: ItemTag,
-//         unique: false
-//     },
-//     foreignKey: 'tag_id',
-//     constraints: false
-// });
-
 const viryfiToken = require('../../service/tokenVeryficator');
 const secretWord = require('../../helper/constants').secret;
 const isUserLoggined = require('../../service/isUserLoggined');
@@ -77,65 +24,87 @@ module.exports = async (req, res) => {
 
 
         let users = await EnrollModel.findAll({
-            attributes: ['id'],
+            attributes: [],
             include: [{
                 model: CarModel,
-                attributes: ['model', 'id']
+                attributes: ['model']
             }, {
                 model: UserModel,
-                attributes: ['name', 'id']
+                attributes: ['name']
             }]
         });
 
-
         let usersAndCars = [];
-
-        let userToPrint = new Object();
-        let allUsers = new Set();
-        //Цикл якийдістає всі значення з масиву який прийшов з бази і вносить їх в інакший масиш
-        // ШТООООО
-        users.forEach(element => {
-            let car = (element.getDataValue('Car').dataValues.model);
-            let userName = (element.getDataValue('User').dataValues.name);
-            let userWithCar = {userName, car};
-            // Тут масив з всіма іменами юзерів
-            allUsers.add(userName);
-            usersAndCars.push(userWithCar);
-        });
-
+        let uniqueUsersSet = new Set();
         let final = [];
-        allUsers.forEach(uniqueName=> {
-            userToPrint.name = uniqueName;
-            console.log(uniqueName);
-            usersAndCars.forEach(userAndCar=>{
-                if (uniqueName === userAndCar.userName) {
-                    console.log(userAndCar)
-                    console.log('__________________________');
-                    userToPrint.cars = userAndCar.car
-                }
-            });
 
-            final.push(userToPrint)
-        });
-
-        console.log('+++++++++++++++++++++++++++++++++++++++++')
-        console.log(final);
-
-
-        // usersAndCars.forEach(obj => {
-        //     if (allUsers.has(obj.userName)) {
-        //         console.log(obj.userName);
-        //         console.log(obj.car);
-        //         console.log(allUsers);
-        //         console.log('__________________');
-        //     }
+        // // РОБОЧА
+        // //Отримую список унікальних імен
+        // users.forEach(element => {
+        //     let car = (element.getDataValue('Car').dataValues.model);
+        //     let userName = (element.getDataValue('User').dataValues.name);
+        //     let userWithCar = {userName, car};
+        //     // Тут масив з всіма іменами юзерів
+        //     uniqueUsersSet.add(userName);
+        //     usersAndCars.push(userWithCar);
+        // });
+        //
+        // // Приямаю сет унікальних імен
+        // uniqueUsersSet.forEach(uniqueName => {
+        //     let userToPrint = {};
+        //     let userCar = [];
+        //     usersAndCars.forEach(userAndCar => {
+        //         if (userAndCar.userName === uniqueName) {
+        //             userCar.push(userAndCar.car);
+        //         }
+        //         userToPrint.name = uniqueName;
+        //         userToPrint.cars = userCar;
+        //     });
+        //     final.push(userToPrint);
         // });
 
-        res.json(usersAndCars)
-    } catch (err) {
+        //НЕ РОБОЧА 1
+        users.forEach(userAndCar => {
+            let userToPrint = {};
+            let userCar = [];
+            let currentCar = (userAndCar.getDataValue('Car').dataValues.model);
+            let currentUserName = (userAndCar.getDataValue('User').dataValues.name);
+            userToPrint.name = currentUserName;
+            userToPrint.cars = userCar;
+            final.push(userToPrint);
+
+            final.some(carUserObj => {
+                if (carUserObj.name === currentUserName) {
+                    carUserObj.cars.push(currentCar);
+                    return true;
+                }
+            });
+        });
+        let t = final.filter(filteredObj => filteredObj.cars.length > 0);
+
+        // //НЕ РОБОЧА 2
+        // for(let i = 0; i < users.length; i++) {
+        //     let userToPrint = {};
+        //     let userCar = [];
+        //     let currentCar = (users[i].getDataValue('Car').dataValues.model);
+        //     let currentUserName = (users[i].getDataValue('User').dataValues.name);
+        //     console.log(users[i].dataValues);
+        //     userToPrint.name = currentUserName;
+        //     userCar.push(currentCar);
+        //     userToPrint.cars = userCar;
+        //     final.push(userToPrint);
+        //     if (Object.values(final).indexOf(currentUserName)) {
+        //     }
+        // }
+
+        res.json(t)
+    }
+    catch
+        (err) {
         res.json({
             success: false,
             message: err.message
         })
     }
-};
+}
+;
