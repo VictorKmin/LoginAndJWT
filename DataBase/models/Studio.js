@@ -7,8 +7,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        userId:{
-            type: DataTypes.INTEGER
+        userId: {
+            type: DataTypes.INTEGER,
+            foreignKey: true
         },
         name: {
             type: DataTypes.STRING,
@@ -16,15 +17,39 @@ module.exports = (sequelize, DataTypes) => {
         address: {
             type: DataTypes.STRING
         },
-        createdAt:{
+        createdAt: {
             type: DataTypes.DATE
         },
         updatedAt: {
             type: DataTypes.DATE
         }
     }, {
-        tableName: 'users',
-        // timestamps: false
+        tableName: 'studios',
+        timestamps: false,
+        scopes: {
+            findStudiosByUserId: userId => {
+                return {where: {userId: userId}}
+            },
+            createStudio: (studioAddress, studioName, userId) => {
+                return {
+                    userId: userId,
+                    name: studioName,
+                    address: studioAddress,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                }
+            },
+            findStudiosByUserIdAndStudioId: (userId, studioId)=> {
+                return{where: {id: studioId, userId: userId}}
+            },
+            // updatestudio: (userId, studioId, studioName, studioAdd)=> {
+            //     return{
+            //         name: studioName,
+            //         address: studioAdd,
+            //         updatedAt: new Date()
+            //     }
+            // }
+        }
     });
     return Studio
 };
