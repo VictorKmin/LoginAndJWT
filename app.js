@@ -7,6 +7,7 @@ const createError = require('http-errors');
 
 const userRouter = require('./router/userRouter');
 const authRouter = require('./router/authRouter');
+const studioRouter = require('./router/studioRouter');
 
 const postgres = new require('./DataBase').getInstance();
 postgres.setModels();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', userRouter);
 app.use('/auth', authRouter);
+app.use('/studio', studioRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));

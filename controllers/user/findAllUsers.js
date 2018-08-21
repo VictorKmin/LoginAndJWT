@@ -34,11 +34,12 @@ module.exports = async (req, res) => {
             }]
         });
 
-        let usersAndCars = [];
-        let uniqueUsersSet = new Set();
+
         let final = [];
 
-        // // РОБОЧА
+        // // РОБОЧА на циклах
+        // let usersAndCars = [];
+        // let uniqueUsersSet = new Set();
         // //Отримую список унікальних імен
         // users.forEach(element => {
         //     let car = (element.getDataValue('Car').dataValues.model);
@@ -62,8 +63,9 @@ module.exports = async (req, res) => {
         //     });
         //     final.push(userToPrint);
         // });
+        // res.json(final)
 
-        //НЕ РОБОЧА 1
+        // РОБОЧА без циклів
         users.forEach(userAndCar => {
             let userToPrint = {};
             let userCar = [];
@@ -81,22 +83,6 @@ module.exports = async (req, res) => {
             });
         });
         let t = final.filter(filteredObj => filteredObj.cars.length > 0);
-
-        // //НЕ РОБОЧА 2
-        // for(let i = 0; i < users.length; i++) {
-        //     let userToPrint = {};
-        //     let userCar = [];
-        //     let currentCar = (users[i].getDataValue('Car').dataValues.model);
-        //     let currentUserName = (users[i].getDataValue('User').dataValues.name);
-        //     console.log(users[i].dataValues);
-        //     userToPrint.name = currentUserName;
-        //     userCar.push(currentCar);
-        //     userToPrint.cars = userCar;
-        //     final.push(userToPrint);
-        //     if (Object.values(final).indexOf(currentUserName)) {
-        //     }
-        // }
-
         res.json(t)
     }
     catch
