@@ -1,4 +1,3 @@
-
 const viryfiToken = require('../../service/tokenVeryficator');
 const secretWord = require('../../helper/constants').secret;
 const isUserLoggined = require('../../service/isUserLoggined');
@@ -11,12 +10,26 @@ module.exports = async (req, res) => {
         const userFromToken = await viryfiToken(token, secretWord);
         await isUserLoggined(postgres, token);
 
-        const idStudioToDelete = req.body.id;
+        const StudioToDeleteId = req.body.id;
         const userId = userFromToken.id;
+        if (!StudioToDeleteId) throw new Error('Please enter studio ID');
 
-        const deletedStudio = await StudioModel.scope({method:['findStudiosByUserIdAndStudioId', userId, idStudioToDelete]}).destroy();
+        // const isStudioDeleted =
+        await StudioModel
+            .scope({method: ['findStudiosByUserIdAndStudioId', userId, StudioToDeleteId]})
+            .destroy();
 
-        res.json(deletedStudio)
+        // if (isStudioDeleted) {
+        //     res.json({
+        //         success: true,
+        //         message: `Studio with id ${StudioToDeleteId} is deleted`
+        //     })
+        // }
+        res.json({
+            success: true,
+            message: `Studio with id ${StudioToDeleteId} is deleted`
+        })
+
     } catch (err) {
         res.json({
             success: false,

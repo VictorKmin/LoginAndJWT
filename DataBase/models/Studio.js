@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         address: {
             type: DataTypes.STRING
         },
+        phone: {
+            type: DataTypes.STRING
+        },
         createdAt: {
             type: DataTypes.DATE
         },
@@ -30,18 +33,22 @@ module.exports = (sequelize, DataTypes) => {
             findStudiosByUserId: userId => {
                 return {where: {userId: userId}}
             },
-            createStudio: (studioAddress, studioName, userId) => {
-                return {
-                    userId: userId,
-                    name: studioName,
-                    address: studioAddress,
-                    createdAt: new Date(),
-                    updatedAt: new Date()
-                }
+            findStudiosByUserIdAndStudioId: (userId, studioId) => {
+                return {where: {id: studioId, userId: userId}}
             },
-            findStudiosByUserIdAndStudioId: (userId, studioId)=> {
-                return{where: {id: studioId, userId: userId}}
+            findStudiosByName: studioName => {
+                return {where: {name: studioName}}
             },
+            // createStudio: (userId, studioName, studioAddress) => {
+            //     return {
+            //         userId: userId,
+            //         name: studioName,
+            //         address: studioAddress,
+            //         createdAt: new Date(),
+            //         updatedAt: new Date()
+            //     }
+            // },
+
             // updatestudio: (userId, studioId, studioName, studioAdd)=> {
             //     return{
             //         name: studioName,

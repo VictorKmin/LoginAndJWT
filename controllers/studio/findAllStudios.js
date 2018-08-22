@@ -13,6 +13,9 @@ module.exports = async (req, res) => {
 
         let studios = await StudioModel.scope({method: ['findStudiosByUserId', userID]}).findAll();
 
+        // if (!studios) throw new Error('User have no studios') ;
+        if (!studios.length) throw new Error('User have no studios');
+
         res.json(studios)
     } catch (err) {
         res.json({
