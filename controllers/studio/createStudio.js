@@ -1,8 +1,8 @@
-const viryfiToken = require('../../service/tokenVeryficator');
-const secretWord = require('../../helper/constants').secret;
-const isUserLoggined = require('../../service/isUserLoggined');
-const emailValidator = require('../../service/emailValidator');
-const phoneValidator = require('../../service/phoneValidator');
+const viryfiToken = require('../../hepler/tokenVeryficator');
+const secretWord = require('../../constants/constants').secret;
+const isUserLoggined = require('../../hepler/isUserLoggined');
+const emailValidator = require('../../hepler/emailValidator');
+const phoneValidator = require('../../hepler/phoneValidator');
 
 //
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNTM0ODYxMTk1LCJleHAiOjE2MzQ4NjExOTR9.8V-X1xjB8mgxTFHNrubZRwlwUUmYzMtl-W7NNDIjDMk

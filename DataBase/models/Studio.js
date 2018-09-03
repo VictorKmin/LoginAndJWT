@@ -39,23 +39,6 @@ module.exports = (sequelize, DataTypes) => {
             findStudiosByName: studioName => {
                 return {where: {name: studioName}}
             },
-            // createStudio: (userId, studioName, studioAddress) => {
-            //     return {
-            //         userId: userId,
-            //         name: studioName,
-            //         address: studioAddress,
-            //         createdAt: new Date(),
-            //         updatedAt: new Date()
-            //     }
-            // },
-
-            // updatestudio: (userId, studioId, studioName, studioAdd)=> {
-            //     return{
-            //         name: studioName,
-            //         address: studioAdd,
-            //         updatedAt: new Date()
-            //     }
-            // }
         }
     });
     return Studio

@@ -1,6 +1,6 @@
-const viryfiToken = require('../../service/tokenVeryficator');
-const secretWord = require('../../helper/constants').secret;
-const isUserLoggined = require('../../service/isUserLoggined');
+const viryfiToken = require('../../hepler/tokenVeryficator');
+const secretWord = require('../../constants/constants').secret;
+const isUserLoggined = require('../../hepler/isUserLoggined');
 
 module.exports = async (req, res) => {
     try {
@@ -18,13 +18,6 @@ module.exports = async (req, res) => {
         await StudioModel
             .scope({method: ['findStudiosByUserIdAndStudioId', userId, StudioToDeleteId]})
             .destroy();
-
-        // if (isStudioDeleted) {
-        //     res.json({
-        //         success: true,
-        //         message: `Studio with id ${StudioToDeleteId} is deleted`
-        //     })
-        // }
         res.json({
             success: true,
             message: `Studio with id ${StudioToDeleteId} is deleted`

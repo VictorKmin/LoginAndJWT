@@ -1,6 +1,6 @@
-const viryfiToken = require('../../service/tokenVeryficator');
-const secretWord = require('../../helper/constants').secret;
-const isUserLoggined = require('../../service/isUserLoggined');
+const viryfiToken = require('../../hepler/tokenVeryficator');
+const secretWord = require('../../constants/constants').secret;
+const isUserLoggined = require('../../hepler/isUserLoggined');
 
 module.exports = async (req, res) => {
     try {

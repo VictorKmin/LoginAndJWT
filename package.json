@@ -9,12 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.299.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "express-jwt": "^5.3.1",
     "http-errors": "latest",
     "jsonwebtoken": "^8.3.0",
+    "nodemailer": "^4.6.8",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",
     "uuid": "latest"

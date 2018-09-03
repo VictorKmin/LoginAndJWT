@@ -2,13 +2,23 @@
 <form action="/register" method="post">
     <input type="text" name="name"> Name <br>
     <input type="password" name="password"> Password <br>
+    <input type="email" name="email"> Email <br>
     <input type="submit" value="Register me">
 </form>
 
+<br><br><br>
 
 <h1>LOGIN PAGE</h1>
 <form action="/welcome" method="post">
     <input type="text" name="name"> User Name <br>
     <input type="password" name="password"> Password <br>
     <input type="submit" value="Login!">
+</form>
+
+<br><br><br>
+
+<h1>RESET PASSWORD</h1>
+<form action="/auth/reset" method="post">
+    <input type="email" name="email"> Email <br>
+    <input type="submit" value="Reset!">
 </form>

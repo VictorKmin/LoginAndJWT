@@ -1,6 +1,6 @@
-const tokenizer = require('../../service/tokenizer');
-const viryfiToken = require('../../service/tokenVeryficator');
-const secretWord = require('../../helper/constants').refreshSecret;
+const tokenizer = require('../../hepler/tokenizer');
+const viryfiToken = require('../../hepler/tokenVeryficator');
+const secretWord = require('../../constants/constants').refreshSecret;
 
 // accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsIm5hbWUiOiIxMSIsImlhdCI6MTUzNDMzOTQ1OSwiZXhwIjoxNjM0MzM5NDU4fQ.7l7FXFpxhbnpJF_pB2Z8d0rR9yXiQwzy0uqm0AUDoak",
 //refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsIm5hbWUiOiIxMSIsImlhdCI6MTUzNDMzOTQ1OSwiZXhwIjoxMDAxNTM0MzM5NDU4fQ.HrDSvD75JmWUz89bUSJ9RoPGnXaqYknzS5f5QfG9okI"
@@ -11,7 +11,6 @@ const secretWord = require('../../helper/constants').refreshSecret;
 
 module.exports = async (req, res) => {
     try {
-        console.log('login User Page');
         const postgres = req.app.get('postgres');
         const TokenModel = postgres.getModel('Token');
         const UserModel = postgres.getModel('User');
@@ -26,7 +25,7 @@ module.exports = async (req, res) => {
                 name: user.name
             }
         });
-        if (!userWhoChangeToken) throw new Error('User is incorrect. Try another token');
+        if (!userWhoChangeToken) throw new Error('User is incorrect. Try another auth');
 
         // видаляю старийтокен з бази
         await TokenModel.destroy({

@@ -5,7 +5,7 @@ const rigisterUser = require('../controllers/user/registerUser');
 const logoutUser = require('../controllers/user/logoutUser');
 const homePage = require('../controllers/homePages/homePageController');
 const findAllController = require('../controllers/user/findAllUsers');
-const updateUserController = require('../controllers/user/updateUserController');
+const updateUserController = require('../controllers/user/updateUser');
 
 router.get('/',homePage);
 router.post('/welcome', loginUser);

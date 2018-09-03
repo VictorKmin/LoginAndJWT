@@ -1,8 +1,8 @@
-const viryfiToken = require('../../service/tokenVeryficator');
-const secretWord = require('../../helper/constants').secret;
-const isUserLoggined = require('../../service/isUserLoggined');
-const emailValidator = require('../../service/emailValidator');
-const phoneValidator = require('../../service/phoneValidator');
+const viryfiToken = require('../../hepler/tokenVeryficator');
+const secretWord = require('../../constants/constants').secret;
+const isUserLoggined = require('../../hepler/isUserLoggined');
+const emailValidator = require('../../hepler/emailValidator');
+const phoneValidator = require('../../hepler/phoneValidator');
 
 module.exports = async (req, res) => {
     try {
@@ -25,10 +25,6 @@ module.exports = async (req, res) => {
         if (!isValidEmail) throw new Error('Please enter email like example@example.com');
         const isPhoneValid = phoneValidator(studioPhone);
         if (!isPhoneValid) throw new Error('Please enter phone like +380123456789');
-
-        // const isStudioPresenr = await StudioModel
-        //     .scope({method: ['findStudiosByUserIdAndStudioId', userId, studioId]})
-        //     .findOne();
 
         const isStudioNamePresent = await StudioModel.scope({method: ['findStudiosByName', studioName]}).findOne();
         if (isStudioNamePresent) throw new Error(`Name ${studioName} is already occupied`);

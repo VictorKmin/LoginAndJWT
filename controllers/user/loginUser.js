@@ -1,8 +1,8 @@
 /**
  * Сторінка логінації
  */
-const hasher = require('../../service/passwordHasher');
-const tokenizer = require('../../service/tokenizer');
+const hasher = require('../../hepler/passwordHasher');
+const tokenizer = require('../../hepler/tokenizer');
 
 module.exports = async (req, res) => {
     try {
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
         // створюю пару токенів
         const tokens = tokenizer(userID, userName);
 
-        // Записую access token в базу Токенів
+        // Записую access auth в базу Токенів
         await TokenModel.create({
             userID: userID,
             accessToken: tokens.accessToken

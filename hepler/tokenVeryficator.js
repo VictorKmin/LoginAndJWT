@@ -3,10 +3,10 @@ module.exports = async (token, secretWorld) => {
     let unixNow = Math.floor(Date.now() / 1000);
     let user = null;
 
-    if (!token || !secretWorld) throw new Error('Have not postgres, token or secret word');
+    if (!token || !secretWorld) throw new Error('Have not postgres, auth or secret word');
 
     jwt.verify(token, secretWorld, (err, decoded) => {
-        if (err) throw new Error('You have bad token.');
+        if (err) throw new Error('You have bad auth.');
         if (decoded.exp <= unixNow) throw new Error('TOKEN EXPIRED');
         console.log(decoded);
         user = {

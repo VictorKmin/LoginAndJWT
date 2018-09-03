@@ -1,8 +1,8 @@
 module.exports = async (req, res) => {
     try {
-        const viryfiToken = require('../../service/tokenVeryficator');
-        const isUserLoggined = require('../../service/isUserLoggined');
-        const secretWord = require('../../helper/constants').secret;
+        const viryfiToken = require('../../hepler/tokenVeryficator');
+        const isUserLoggined = require('../../hepler/isUserLoggined');
+        const secretWord = require('../../constants/constants').secret;
         const postgres = req.app.get('postgres');
         const UserModel = postgres.getModel('User');
         const id = req.body.id;
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
         // перевіряю чи токен є в базі з токенами
         await isUserLoggined(postgres, token);
         // Перевірка на випадок якщо ми пеедали не той токен, або ввели невірну id в квері
-        if (id !== userFromToken.id) throw new Error('Wrong token or wrong user id');
+        if (id !== userFromToken.id) throw new Error('Wrong auth or wrong user id');
 
         //
        const updatedUser = await UserModel.update({
