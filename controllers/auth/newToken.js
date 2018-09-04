@@ -1,4 +1,4 @@
-const tokenizer = require('../../hepler/tokenizer');
+const tokenizer = require('../../hepler/tokenizer').accessAndRefresh;
 const viryfiToken = require('../../hepler/tokenVeryficator');
 const secretWord = require('../../constants/secretWords').refreshSecret;
 

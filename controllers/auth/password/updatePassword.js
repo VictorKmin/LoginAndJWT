@@ -1,10 +1,9 @@
-const viryfiToken = require('../../hepler/tokenVeryficator');
-const passwordHasher = require('../../hepler/passwordHasher');
-const resetPassWord = require('../../constants/secretWords').resetPassWord;
+const viryfiToken = require('../../../hepler/tokenVeryficator');
+const passwordHasher = require('../../../hepler/passwordHasher');
+const resetPassWord = require('../../../constants/secretWords').resetPassWord;
 
 module.exports = async (req, res)=> {
 
-    const token = req.query.token;
     try {
         const postgres = req.app.get('postgres');
         const UserModel = postgres.getModel('User');

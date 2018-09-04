@@ -4,6 +4,7 @@ const path = require("path");
 const expBars = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
+const passport = require('passport');
 
 const userRouter = require('./router/userRouter');
 const authRouter = require('./router/authRouter');
@@ -28,6 +29,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+require('./controllers/auth/facebook/facebookAuth');
+app.use(passport.initialize());
 
 app.use('/', userRouter);
 app.use('/auth', authRouter);

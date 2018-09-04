@@ -1,8 +1,8 @@
 /**
  * Сторінка зміни паролю
  */
-const tokenizer = require('../../hepler/tokenizer');
-const mailSender = require('../../hepler/mailSender');
+const tokenizer = require('../../../hepler/tokenizer');
+const mailSender = require('../../../hepler/mailSender');
 
 module.exports = async (req, res) => {
     try {

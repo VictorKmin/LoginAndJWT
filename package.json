@@ -17,6 +17,8 @@
     "http-errors": "latest",
     "jsonwebtoken": "^8.3.0",
     "nodemailer": "^4.6.8",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",
     "uuid": "latest"
