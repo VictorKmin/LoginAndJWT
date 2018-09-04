@@ -1,16 +1,22 @@
 const jwt = require('jsonwebtoken');
-const secretWorld = require('../constants/constants').secret;
-const refreshSecret = require('../constants/constants').refreshSecret;
+const secretWorld = require('../constants/secretWords').secret;
+const refreshSecret = require('../constants/secretWords').refreshSecret;
+const resetPassWord = require('../constants/secretWords').resetPassWord;
 
 
-module.exports = (id,name)=> {
-        let accessToken = jwt.sign({id: id}, secretWorld, {expiresIn: 99999999});
-        let refreshToken = jwt.sign({id: id, name: name}, refreshSecret, {expiresIn: 999999999999});
-        let tokens = {
-            accessToken,
-            refreshToken
-        };
-        if (!tokens) throw new Error('TOKEN WAS NOT CREATED');
-        return tokens;
+module.exports.accessAndRefresh = (id, name) => {
+    const accessToken = jwt.sign({id: id}, secretWorld, {expiresIn: 99999999});
+    const refreshToken = jwt.sign({id: id, name: name}, refreshSecret, {expiresIn: 999999999999});
+    const tokens = {
+        accessToken,
+        refreshToken
+    };
+    if (!tokens) throw new Error('TOKEN WAS NOT CREATED');
+    return tokens;
+};
 
+module.exports.resetPassword = (id, userMail) => {
+    const resetToken = jwt.sign({id, userMail}, resetPassWord, {expiresIn: 9999});
+    if (!resetToken) throw new Error(`Token was not created`);
+    return resetToken;
 };

@@ -1,5 +1,5 @@
 const viryfiToken = require('../../hepler/tokenVeryficator');
-const secretWord = require('../../constants/constants').secret;
+const secretWord = require('../../constants/dataBase').secret;
 const isUserLoggined = require('../../hepler/isUserLoggined');
 const emailValidator = require('../../hepler/emailValidator');
 const phoneValidator = require('../../hepler/phoneValidator');

@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const resolve = require('path').resolve;
-const DBName = require('../constants/constants').dbName;
-const DBUser = require('../constants/constants').dbUser;
-const DBPass = require('../constants/constants').dbPass;
+const DBName = require('../constants/dataBase').dbName;
+const DBUser = require('../constants/dataBase').dbUser;
+const DBPass = require('../constants/dataBase').dbPass;
 
 module.exports = (() => {
     let instance;

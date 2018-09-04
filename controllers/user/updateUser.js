@@ -2,7 +2,7 @@ module.exports = async (req, res) => {
     try {
         const viryfiToken = require('../../hepler/tokenVeryficator');
         const isUserLoggined = require('../../hepler/isUserLoggined');
-        const secretWord = require('../../constants/constants').secret;
+        const secretWord = require('../../constants/dataBase').secret;
         const postgres = req.app.get('postgres');
         const UserModel = postgres.getModel('User');
         const id = req.body.id;

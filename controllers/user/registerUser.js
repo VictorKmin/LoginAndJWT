@@ -2,6 +2,7 @@ const hasher = require('../../hepler/passwordHasher');
 
 module.exports = async (req, res) => {
     /**
+     * Registration user method
      * @param postgres - DataBase connector
      * @param UserModel - model of user in dataBase
      * @param {string }userName- model of user in dataBase

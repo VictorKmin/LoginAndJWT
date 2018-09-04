@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
         if (isUserLoggined) throw new Error('You are logged. Please /logout first');
 
         // створюю пару токенів
-        const tokens = tokenizer(userID, userName);
+        const tokens = tokenizer.accessAndRefresh(userID, userName);
 
         // Записую access auth в базу Токенів
         await TokenModel.create({

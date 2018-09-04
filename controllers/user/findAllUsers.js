@@ -6,7 +6,7 @@
 // wrongRefresh: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTM0MzI3MTgxLCJleHAiOjExNTM0MzI3MTgwfQ._kMaILb5tRg6B0m9px1yFfjzv7_GOEBDFyhMWVyPtIE
 
 const viryfiToken = require('../../hepler/tokenVeryficator');
-const secretWord = require('../../constants/constants').secret;
+const secretWord = require('../../constants/dataBase').secret;
 const isUserLoggined = require('../../hepler/isUserLoggined');
 
 

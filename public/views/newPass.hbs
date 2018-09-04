@@ -1,0 +1,7 @@
+<h1>CHANGE PASSWORD</h1>
+<form action="/auth/updatepass" method="post">
+    <input type="password" name="firstPass"> Password <br>
+    <input type="password" name="secondPass"> Password Again <br>
+    <input type="hidden" name="token" value={{token}}> Password Again <br>
+    <input type="submit" value="Change password">
+</form>
