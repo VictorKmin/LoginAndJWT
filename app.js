@@ -30,6 +30,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 require('./controllers/auth/facebook/facebookAuth');
+require('./controllers/auth/google/googleAuth');
 app.use(passport.initialize());
 
 app.use('/', userRouter);

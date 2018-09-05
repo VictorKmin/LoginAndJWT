@@ -7,10 +7,10 @@ module.exports = async (req, res) => {
         const TokenModel = postgres.getModel('Token');
         const UserModel = postgres.getModel('User');
 
-        const userFromFacebook = req.user._json;
-        const email = userFromFacebook.email;
-        const name = `${userFromFacebook.first_name} ${userFromFacebook.last_name}` ;
-        if (!userFromFacebook) throw new Error('Some trouble with facebook');
+        const userFromGoogle = req.user._json;
+        const name = userFromGoogle.displayName;
+        const email = userFromGoogle.emails[0].value;
+        if (!userFromGoogle) throw new Error('Some trouble with facebook');
 
         // Шукаю чи присутній юзер з мейлом фейсбука в базі
         let isUserLoggined = await UserModel.findOne({
@@ -47,6 +47,7 @@ module.exports = async (req, res) => {
             });
 
         } else { // Якщо ні, то генерую йому пароль, записую юзера в базу, та генерую йому пару токенів
+
             await UserModel.create({
                 name,
                 password: randomPassword,
