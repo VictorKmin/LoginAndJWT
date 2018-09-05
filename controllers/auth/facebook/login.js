@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
 
         const userFromFacebook = req.user._json;
         const email = userFromFacebook.email;
-        const name = `${userFromFacebook.first_name} ${userFromFacebook.last_name}` ;
+        const name = `${userFromFacebook.first_name} ${userFromFacebook.last_name}`;
         if (!userFromFacebook) throw new Error('Some trouble with facebook');
 
         // Шукаю чи присутній юзер з мейлом фейсбука в базі
@@ -18,7 +18,6 @@ module.exports = async (req, res) => {
                 email
             }
         });
-
         if (isUserLoggined) { // Якщо такий юзер присутній. то я видаляю його токени з бази, даю нову пару токенів та вношу в базу
             const userID = isUserLoggined.id;
             const userName = isUserLoggined.name;
@@ -30,13 +29,11 @@ module.exports = async (req, res) => {
             });
             // Генерю нову пару
             const tokens = tokenizer(userID, userName);
-
             // Записую access auth в базу Токенів
             await TokenModel.create({
                 userID,
                 accessToken: tokens.accessToken
             });
-
             // віддаю їх на фронт
             res.json({
                 success: true,
@@ -52,18 +49,14 @@ module.exports = async (req, res) => {
                 password: randomPassword,
                 email,
             });
-
             const newUser = await UserModel.findOne({
                 where: {
                     email
                 }
             });
-
             const tokens = tokenizer(newUser.id, newUser.name);
-
             res.json({success: true, tokens});
         }
-
     } catch (e) {
         res.json({success: false, message: e.message})
     }

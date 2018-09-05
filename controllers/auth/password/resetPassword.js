@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
 
         // створюю reset Token
         const token = tokenizer.resetPassword(userID, userMail);
-        mailSender(userMail, token);
+        mailSender(userMail,user.name, token);
 
 
         // віддаю їх на фронт

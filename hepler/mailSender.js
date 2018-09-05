@@ -2,7 +2,8 @@ const nodemailer = require('nodemailer');
 const email = require('../constants/emailParams').email;
 const pass = require('../constants/emailParams').pass;
 
-module.exports = (userMail, token) => {
+module.exports = (userMail, userName, token) => {
+
     const msg = `http://localhost:3000/auth/setnewpass?token=${token}`;
 
     let transporter = nodemailer.createTransport({

@@ -1,33 +1,38 @@
-<h1>REGISTRATION PAGE</h1>
-<form action="/register" method="post">
-    <input type="text" name="name"> Name <br>
-    <input type="password" name="password"> Password <br>
-    <input type="email" name="email"> Email <br>
-    <input type="submit" value="Register me">
-</form>
+<div style="width: 100%">
+    <div style="width: 20%; margin-left: 20%">
+        <h1>REGISTRATION PAGE</h1>
+        <form action="/register" method="post" enctype="multipart/form-data">
+            <input type="text" name="name"> Name <br>
+            <input type="password" name="password"> Password <br>
+            <input type="email" name="email"> Email <br>
+            <input type="file" name="file"> Image <br>
+            <input type="submit" value="Register me" style="background-color: khaki">
+        </form>
 
-<br><br><br>
+        <br><br><br>
 
-<h1>LOGIN PAGE</h1>
-<form action="/welcome" method="post">
-    <input type="text" name="name"> User Name <br>
-    <input type="password" name="password"> Password <br>
-    <input type="submit" value="Login!">
-</form>
+        <h1>LOGIN PAGE</h1>
+        <form action="/welcome" method="post">
+            <input type="text" name="name"> User Name <br>
+            <input type="password" name="password"> Password <br>
+            <input type="submit" value="Login!" style="background-color: khaki">
+        </form>
 
-<br><br>
-<form action="/auth/facebook" method="get">
-    <input type="submit" value="Login with FaceBook">
-</form>
+        <br><br>
+        <form action="/auth/facebook" method="get">
+            <input type="submit" value="Login with Facebook" style="background-color: cornflowerblue">
+        </form>
 
-<br><br>
-<form action="/auth/google" method="get">
-    <input type="submit" value="Login with Google">
-</form>
-<br><br><br>
+        <br><br>
+        <form action="/auth/google" method="get">
+            <input type="submit" value="Login with Google" style="background-color: snow">
+        </form>
+        <br><br><br>
 
-<h1>RESET PASSWORD</h1>
-<form action="/auth/reset" method="post">
-    <input type="email" name="email"> Email <br>
-    <input type="submit" value="Reset!">
-</form>
+        <h1>RESET PASSWORD</h1>
+        <form action="/auth/reset" method="post">
+            <input type="email" name="email"> Email <br>
+            <input type="submit" value="Reset!" style="background-color: khaki">
+        </form>
+    </div>
+</div>

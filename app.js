@@ -16,6 +16,7 @@ postgres.setModels();
 app.set('postgres', postgres);
 
 app.use(express.static(path.join(__dirname, 'public', 'views')));
+// app.use('/uploads',express.static('uploads'));
 
 app.engine('.hbs', expBars({
     extname: '.hbs',
