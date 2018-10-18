@@ -1,5 +1,5 @@
 const viryfiToken = require('../../hepler/tokenVeryficator');
-const secretWord = require('../../constants/dataBase').secret;
+const secretWord = require('../../constants/secretWords').secret;
 const isUserLoggined = require('../../hepler/isUserLoggined');
 
 module.exports = async (req, res) => {
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         await viryfiToken(token, secretWord);
 
         //перевіряю чи юзер залогований.
-       await isUserLoggined(postgres, token);
+       // await isUserLoggined(postgres, token);
 
         await TokenModel.destroy({
             where: {
@@ -19,7 +19,8 @@ module.exports = async (req, res) => {
             }
         });
         res.json({
-            success: true
+            success: true,
+            message: 'You are logged out'
         })
     } catch (err) {
         res.json({

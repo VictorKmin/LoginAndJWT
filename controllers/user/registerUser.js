@@ -1,4 +1,6 @@
 const hasher = require('../../hepler/passwordHasher');
+const mailValidator = require('../../hepler/emailValidator');
+let joi = require('joi');
 
 module.exports = async (req, res) => {
     /**
@@ -8,20 +10,21 @@ module.exports = async (req, res) => {
      * @param {string }userName- model of user in dataBase
      */
     try {
-
         const postgres = req.app.get('postgres');
         const UserModel = postgres.getModel('User');
         const userName = req.body.name;
         const hashedPassword = hasher(req.body.password);
         const userEmail = req.body.email;
+
         if (!userName) throw new Error('Please enter username');
-        if (!userEmail) throw new Error('Please enter email');
+        mailValidator(userEmail);
         let userImage = null;
 
         if (!req.file) {
-            userImage = `public\\uploads\\1.jpg`;
+            userImage = `http://localhost:3000/uploads/1.jpg`;
         } else {
-            userImage = req.file.path;
+            // userImage = `http://localhost:3000/uploads/${req.file.filename}`
+            userImage = `${req.body.userAvatar}`
         }
 
         const users = await UserModel.findOne({
@@ -29,15 +32,7 @@ module.exports = async (req, res) => {
                 name: userName
             }
         });
-        console.log(users);
-
         if (users) throw new Error('THIS USER IS ALREADY CREATED');
-        let userToSave = {
-            name: userName,
-            password: hashedPassword,
-            email: userEmail,
-            userimage: userImage
-        };
 
         await UserModel.create({
             name: userName,
@@ -45,7 +40,10 @@ module.exports = async (req, res) => {
             email: userEmail,
             userimage: userImage
         });
-        res.json(userToSave)
+        res.json({
+            success: true,
+            message: `user ${userName} is created`
+        })
     } catch (err) {
         res.json({
             success: false,

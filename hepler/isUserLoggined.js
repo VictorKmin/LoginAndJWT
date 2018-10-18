@@ -6,6 +6,9 @@ module.exports = async (postgres,token) => {
             accessToken: token
         }
     });
+    console.log('+++++++++++++++++');
+    console.log(isTokenPresent);
+    console.log('+++++++++++++++++');
     if (!isTokenPresent) throw new Error('U are not logged');
     return isTokenPresent
 };

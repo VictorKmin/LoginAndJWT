@@ -6,7 +6,7 @@
 // wrongRefresh: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTM0MzI3MTgxLCJleHAiOjExNTM0MzI3MTgwfQ._kMaILb5tRg6B0m9px1yFfjzv7_GOEBDFyhMWVyPtIE
 
 const viryfiToken = require('../../hepler/tokenVeryficator');
-const secretWord = require('../../constants/dataBase').secret;
+const secretWord = require('../../constants/secretWords').secret;
 const isUserLoggined = require('../../hepler/isUserLoggined');
 
 
@@ -23,67 +23,70 @@ module.exports = async (req, res) => {
         await isUserLoggined(postgres, token);
 
 
-        let users = await EnrollModel.findAll({
-            attributes: [],
-            include: [{
-                model: CarModel,
-                attributes: ['model']
-            }, {
-                model: UserModel,
-                attributes: ['name']
-            }]
-        });
-
-
-        let final = [];
-
-        // // РОБОЧА на циклах
-        // let usersAndCars = [];
-        // let uniqueUsersSet = new Set();
-        // //Отримую список унікальних імен
-        // users.forEach(element => {
-        //     let car = (element.getDataValue('Car').dataValues.model);
-        //     let userName = (element.getDataValue('User').dataValues.name);
-        //     let userWithCar = {userName, car};
-        //     // Тут масив з всіма іменами юзерів
-        //     uniqueUsersSet.add(userName);
-        //     usersAndCars.push(userWithCar);
+        // let users = await EnrollModel.findAll({
+        //     attributes: [],
+        //     include: [{
+        //         model: CarModel,
+        //         attributes: ['model']
+        //     }, {
+        //         model: UserModel,
+        //         attributes: ['name']
+        //     }]
         // });
         //
-        // // Приямаю сет унікальних імен
-        // uniqueUsersSet.forEach(uniqueName => {
+        //
+        // let final = [];
+        //
+        // // // РОБОЧА на циклах
+        // // let usersAndCars = [];
+        // // let uniqueUsersSet = new Set();
+        // // //Отримую список унікальних імен
+        // // users.forEach(element => {
+        // //     let car = (element.getDataValue('Car').dataValues.model);
+        // //     let userName = (element.getDataValue('User').dataValues.name);
+        // //     let userWithCar = {userName, car};
+        // //     // Тут масив з всіма іменами юзерів
+        // //     uniqueUsersSet.add(userName);
+        // //     usersAndCars.push(userWithCar);
+        // // });
+        // //
+        // // // Приямаю сет унікальних імен
+        // // uniqueUsersSet.forEach(uniqueName => {
+        // //     let userToPrint = {};
+        // //     let userCar = [];
+        // //     usersAndCars.forEach(userAndCar => {
+        // //         if (userAndCar.userName === uniqueName) {
+        // //             userCar.push(userAndCar.car);
+        // //         }
+        // //         userToPrint.name = uniqueName;
+        // //         userToPrint.cars = userCar;
+        // //     });
+        // //     final.push(userToPrint);
+        // // });
+        // // res.json(final)
+        //
+        // // РОБОЧА без циклів
+        // users.forEach(userAndCar => {
         //     let userToPrint = {};
         //     let userCar = [];
-        //     usersAndCars.forEach(userAndCar => {
-        //         if (userAndCar.userName === uniqueName) {
-        //             userCar.push(userAndCar.car);
-        //         }
-        //         userToPrint.name = uniqueName;
-        //         userToPrint.cars = userCar;
-        //     });
+        //     let currentCar = (userAndCar.getDataValue('Car').dataValues.model);
+        //     let currentUserName = (userAndCar.getDataValue('User').dataValues.name);
+        //     userToPrint.name = currentUserName;
+        //     userToPrint.cars = userCar;
         //     final.push(userToPrint);
+        //
+        //     final.some(carUserObj => {
+        //         if (carUserObj.name === currentUserName) {
+        //             carUserObj.cars.push(currentCar);
+        //             return true;
+        //         }
+        //     });
         // });
-        // res.json(final)
+        // let t = final.filter(filteredObj => filteredObj.cars.length > 0);
+        // res.json(t);
 
-        // РОБОЧА без циклів
-        users.forEach(userAndCar => {
-            let userToPrint = {};
-            let userCar = [];
-            let currentCar = (userAndCar.getDataValue('Car').dataValues.model);
-            let currentUserName = (userAndCar.getDataValue('User').dataValues.name);
-            userToPrint.name = currentUserName;
-            userToPrint.cars = userCar;
-            final.push(userToPrint);
-
-            final.some(carUserObj => {
-                if (carUserObj.name === currentUserName) {
-                    carUserObj.cars.push(currentCar);
-                    return true;
-                }
-            });
-        });
-        let t = final.filter(filteredObj => filteredObj.cars.length > 0);
-        res.json(t)
+        let users = await UserModel.findAll();
+        res.json(users)
     }
     catch
         (err) {
